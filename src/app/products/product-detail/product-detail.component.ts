@@ -1,36 +1,33 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.css']
+  styleUrls: ['./product-detail.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailComponent implements OnChanges, OnInit {
   @Output() bought = new EventEmitter<string>();
-  @Input() name = '';
+  @Input() product: Product | undefined;
 
   constructor() {
-    console.log(`Name is ${this.name} in the constructor`);
+
   }
   ngOnInit(): void {
-    console.log(`Name is ${this.name} in the ngOnInit`);
+
   }
 
   buy() {
-    this.bought.emit(this.name);
+    this.bought.emit();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const product = changes['name'];
+    const product = changes['product'];
     if (!product.isFirstChange()) {
-      const oldValue = product.previousValue;
-      const newValue = product.currentValue;
-      console.log(`firsthand is ${product.firstChange}`);
+      const oldValue = product.previousValue.name;
+      const newValue = product.currentValue.name;
       console.log(`Product changed from ${oldValue} to ${newValue}`);
     }
-  }
-  get productName(): string {
-    console.log(`Get ${this.name}`);
-    return this.name;
   }
 }
