@@ -1,6 +1,12 @@
-<div *ngIf="name">
+<div *ngIf="product">
   <h2>Product Details</h2>
-  <h3>{{name}}</h3>
+  <h3>{{product.name}}</h3>
+  <div [ngSwitch]="product.name">
+    <p *ngSwitchCase="'Webcam'">Used for video conferencing</p>
+    <p *ngSwitchCase="'Microphone'">Used for audio conferencing</p>
+    <p *ngSwitchCase="'Wireless keyboard'">General purpose keyboard</p>
+    <p *ngSwitchDefault>General use</p>
+  </div>
   <button (click)="buy()">Buy Now</button>
 </div>
 
